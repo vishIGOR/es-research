@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@eventstore/db-client": "^5.0.1",
+    "lz-string": "^1.5.0",
     "node-fetch": "^3.3.1",
     "uuid": "^9.0.0"
   }

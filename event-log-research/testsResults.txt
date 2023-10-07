@@ -1,0 +1,86 @@
+
+
+Tests
+testName	amountOfData	executionTime
+writeAsyncWithRebuildingAggregateForSmallEvent	1 events	
+writeAsyncWithRebuildingAggregateForSmallEvent	10 events	
+writeAsyncWithRebuildingAggregateForSmallEvent	100 events	
+writeAsyncWithRebuildingAggregateForSmallEvent	1000 events	
+writeAsyncWithRebuildingAggregateForSmallEvent	5000 events	
+writeAsyncWithRebuildingAggregateForSmallEvent	10000 events	
+
+Tests
+testName	amountOfData	executionTime
+writeAsyncWithRebuildingAggregateForSmallEvent	1 events	94
+writeAsyncWithRebuildingAggregateForSmallEvent	10 events	123.66666666666667
+writeAsyncWithRebuildingAggregateForSmallEvent	100 events	137.66666666666666
+writeAsyncWithRebuildingAggregateForSmallEvent	1000 events	276
+writeAsyncWithRebuildingAggregateForSmallEvent	5000 events	679.3333333333334
+writeAsyncWithRebuildingAggregateForSmallEvent	10000 events	1215
+
+Tests
+testName	amountOfData	executionTime
+buildingAggregateWithoutSnapshots	1 events	54.666666666666664
+buildingAggregateWithoutSnapshots	10 events	57
+buildingAggregateWithoutSnapshots	100 events	80.66666666666667
+buildingAggregateWithoutSnapshots	1000 events	87
+buildingAggregateWithoutSnapshots	2000 events	111
+buildingAggregateWithoutSnapshots	5000 events	202
+
+Tests
+testName	amountOfData	executionTime
+buildingAggregateWithoutSnapshots	1 events	54
+buildingAggregateWithoutSnapshots	10 events	53.666666666666664
+buildingAggregateWithoutSnapshots	100 events	53.333333333333336
+buildingAggregateWithoutSnapshots	1000 events	97
+buildingAggregateWithoutSnapshots	5000 events	225.66666666666666
+buildingAggregateWithoutSnapshots	10000 events	364
+
+Tests
+testName	amountOfData	executionTime
+buildingAggregateWithoutSnapshots	1 events	52
+buildingAggregateWithoutSnapshots	10 events	52.666666666666664
+buildingAggregateWithoutSnapshots	100 events	64.66666666666667
+buildingAggregateWithoutSnapshots	1000 events	104.66666666666667
+buildingAggregateWithoutSnapshots	5000 events	262
+buildingAggregateWithoutSnapshots	10000 events	354.3333333333333
+buildingAggregateWithoutSnapshots	50000 events	1679.6666666666667
+
+Tests
+testName	amountOfData	executionTime
+buildingAggregateWithoutSnapshots	1 events	52.666666666666664
+buildingAggregateWithoutSnapshots	10 events	57.333333333333336
+buildingAggregateWithoutSnapshots	100 events	55
+buildingAggregateWithoutSnapshots	1000 events	50
+buildingAggregateWithoutSnapshots	5000 events	49.333333333333336
+buildingAggregateWithoutSnapshots	10000 events	54.666666666666664
+buildingAggregateWithoutSnapshots	50000 events	52.333333333333336
+
+Tests
+testName	amountOfData	executionTime
+writeSyncWithRebuildingAggregateForSmallEvent	1 events	69
+writeSyncWithRebuildingAggregateForSmallEvent	10 events	111
+writeSyncWithRebuildingAggregateForSmallEvent	100 events	438
+writeSyncWithRebuildingAggregateForSmallEvent	1000 events	3646
+writeSyncWithRebuildingAggregateForSmallEvent	5000 events	17672.333333333332
+writeSyncWithRebuildingAggregateForSmallEvent	10000 events	43422.333333333336
+
+Tests
+testName	amountOfData	executionTime
+readEventsFromStore	1 events	11841
+readEventsFromStore	10 events	12906
+readEventsFromStore	100 events	12989.333333333334
+readEventsFromStore	1000 events	12734.333333333334
+readEventsFromStore	5000 events	13295.666666666666
+readEventsFromStore	10000 events	12932.666666666666
+readEventsFromStore	50000 events	12965.666666666666
+
+Tests
+testName	amountOfData	executionTime
+readEventsFromStore	1 events	54.666666666666664
+readEventsFromStore	10 events	50.333333333333336
+readEventsFromStore	100 events	61.333333333333336
+readEventsFromStore	1000 events	98.66666666666667
+readEventsFromStore	5000 events	208
+readEventsFromStore	10000 events	362.3333333333333
+readEventsFromStore	50000 events	1561.6666666666667
