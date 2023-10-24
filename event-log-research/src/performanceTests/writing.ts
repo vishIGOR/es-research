@@ -1,5 +1,5 @@
-import { ClientAggregate } from "../aggregates/ClientAggregate";
 import { AccountAggregate } from "../aggregates/AccountAggregate";
+import { ClientAggregate } from "../aggregates/ClientAggregate";
 import { addTableToFile, measureExecutionTime, SpeedTestTableObject, TableObject } from "./helpers";
 
 async function startTests() {
@@ -40,7 +40,7 @@ async function writeSyncWithRebuildingAggregateForSmallEvent(numberOfEvents: num
         });
 
         for (let i = 0; i < numberOfIterations; i++) {
-            await account.deposit({clientId: client.id, amountOfMoney: 10});
+            await account.depositMoney({ clientId: client.id, amountOfMoney: 10 });
         }
     };
 
@@ -77,7 +77,7 @@ async function writeAsyncWithRebuildingAggregateForSmallEvent(numberOfEvents: nu
 
         const promises = [];
         for (let i = 0; i < numberOfIterations; i++) {
-            promises.push(account.deposit({clientId: client.id, amountOfMoney: 10}));
+            promises.push(account.depositMoney({ clientId: client.id, amountOfMoney: 10 }));
         }
 
         await Promise.all(promises);

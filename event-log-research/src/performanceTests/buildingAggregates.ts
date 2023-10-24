@@ -1,5 +1,5 @@
-import { ClientAggregate } from "../aggregates/ClientAggregate";
 import { AccountAggregate } from "../aggregates/AccountAggregate";
+import { ClientAggregate } from "../aggregates/ClientAggregate";
 import { addTableToFile, measureExecutionTime, SpeedTestTableObject, TableObject } from "./helpers";
 
 async function startTests() {
@@ -25,7 +25,7 @@ async function buildingAggregateWithoutSnapshots(numberOfEvents: number[]): Prom
             clientId: client.id
         });
         for (let i = 0; i < currentNumber; i++) {
-            promises.push(account.deposit({clientId: client.id, amountOfMoney: 10}));
+            promises.push(account.depositMoney({ clientId: client.id, amountOfMoney: 10 }));
         }
         console.log(`created ${currentNumber} events for account ${account.id}`);
         accountIds.push(account.id);

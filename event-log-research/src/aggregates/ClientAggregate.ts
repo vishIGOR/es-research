@@ -1,9 +1,10 @@
-import { Aggregate } from "./Aggregate";
-import { ClientEvent, ClientRegistered } from "../events/clientEvents";
-import { EventStore } from "../eventStore/EventStore";
-import { AccountEvent } from "../events/accountEvents";
-import { EventType } from "../events/EventType";
 import { v4 as uuidv4 } from "uuid";
+import { ClientsEventStoreInterface } from "../eventStore/ClientsEventStoreInterface";
+import { EventStore } from "../eventStore/EventStore";
+import { EventType } from "../events/EventType";
+import { ClientEvent } from "../events/clients/ClientEvent";
+import { ClientRegisteredEvent } from "../events/clients/ClientRegisteredEvent";
+import { Aggregate } from "./Aggregate";
 
 export class ClientAggregate extends Aggregate {
     name: string;
@@ -14,13 +15,13 @@ export class ClientAggregate extends Aggregate {
     }
 
     static async get(id: string): Promise<ClientAggregate> {
-        const eventStore = EventStore.getInstance();
+        const eventStore: ClientsEventStoreInterface = EventStore.getInstance();
 
         const aggregate = new this();
 
-        const events = await eventStore.get(ClientEvent.buildStreamName(id));
+        const events = await eventStore.getClientEvents(id);
         for (const event of events) {
-            aggregate.applyEvent(event as AccountEvent);
+            aggregate.applyEvent(event);
         }
 
         return aggregate;
@@ -30,11 +31,11 @@ export class ClientAggregate extends Aggregate {
         const eventStore = EventStore.getInstance();
 
         const id = uuidv4();
-        const registrationEvent = new ClientRegistered({
+        const registrationEvent = new ClientRegisteredEvent({
             clientId: id,
             clientName: params.name
         });
-        await eventStore.save(registrationEvent);
+        await eventStore.saveClientEvent(registrationEvent);
 
         return this.get(id);
     }
@@ -43,7 +44,7 @@ export class ClientAggregate extends Aggregate {
         let definedEvent;
         switch (event.type) {
             case EventType.clientRegistered:
-                definedEvent = event as ClientRegistered;
+                definedEvent = event as ClientRegisteredEvent;
                 this.registeredAt = definedEvent.createdAt;
                 this.id = definedEvent.clientId;
                 this.name = definedEvent.clientName;

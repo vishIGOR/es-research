@@ -13,8 +13,6 @@ export abstract class Event {
         this.createdAt = baseData?.createdAt;
     }
 
-    public abstract get streamName(): string;
-
     public abstract toJsonEvent(): {
         id: string,
         contentType: "application/json",

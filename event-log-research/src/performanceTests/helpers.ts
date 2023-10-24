@@ -22,7 +22,6 @@ export interface SpeedTestTableObject extends TableObject {
 }
 
 export function addTableToFile(data: TableObject[], tableName: string, filePath: string): void {
-    console.log("test")
     if (data.length === 0) {
         return;
     }
@@ -35,11 +34,11 @@ export function addTableToFile(data: TableObject[], tableName: string, filePath:
 
     const tableSection = `\n\n${tableName}\n${tableText}`;
 
-    fs.appendFileSync(filePath, tableSection, {encoding: "utf-8"});
+    fs.appendFileSync(filePath, tableSection, { encoding: "utf-8" });
 }
 
-export function measureExecutionTime(fn: (...args: any[]) => any){
-    return async function (params: any[]):Promise<number> {
+export function measureExecutionTime(fn: (...args: any[]) => any) {
+    return async function (params: any[]): Promise<number> {
         const startTime = Date.now();
         const result = await fn(...params);
         const endTime = Date.now();
