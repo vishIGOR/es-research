@@ -10,6 +10,8 @@ import { MoneyDepositedEvent } from "../events/accounts/MoneyDepositedEvent";
 import { MoneyTransferredFromAccountEvent } from "../events/accounts/MoneyTransferredFromAccount";
 import { MoneyTransferredToAccountEvent } from "../events/accounts/MoneyTransferredToAccountEvent";
 import { MoneyWithdrewEvent } from "../events/accounts/MoneyWithdrewEvent";
+import { AccountSnapshot } from "../snapshots/accounts/AccountSnapshot";
+import { AccountSnapshotsRepositoryInterface } from "../snapshots/accounts/AccountSnashotsRepositoryInterface";
 import { Aggregate } from "./Aggregate";
 
 export class AccountAggregate extends Aggregate {
@@ -17,6 +19,7 @@ export class AccountAggregate extends Aggregate {
     openedAt: Date;
     balance: number = 0;
     isBlocked: boolean = false;
+    private snapshotBuildingPeriod: number = 10;
 
     private constructor() {
         super();
@@ -158,10 +161,26 @@ export class AccountAggregate extends Aggregate {
         await Promise.all(promises)
     }
 
+    static applySnapshot(snapshot: AccountSnapshot): AccountAggregate {
+        const account = new AccountAggregate();
+        account.balance = snapshot.balance;
+        account.isBlocked = snapshot.isBlocked;
+        return account;
+    }
+
+    async buildSnapshot(snapshotsRepository: AccountSnapshotsRepositoryInterface): Promise<void> {
+        if (this.snapshotBuildingPeriod > 0 && this.balance > this.snapshotBuildingPeriod) {
+            const snapshot = new AccountSnapshot({ version: this.version, id: this.id, ownerId: this.ownerId, balance: this.balance, isBlocked: this.isBlocked, openedAt: this.openedAt });
+            await snapshotsRepository.save(snapshot);
+        }
+    }
+
+
     private throwErrorIfBlocked() {
         if (this.isBlocked) {
             throw new Error("Account is blocked");
         }
     }
-
 }
+
+
