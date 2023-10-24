@@ -51,7 +51,5 @@ export class ClientAggregate extends Aggregate {
 
                 break;
         }
-
-        this.version = event.revision;
     }
 }

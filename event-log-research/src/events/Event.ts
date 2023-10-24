@@ -20,16 +20,6 @@ export abstract class Event {
         data: {},
         metadata: MetadataType
     }
-
-    // public abstract toCompressedData(): {
-    //     id: string,
-    //     contentType: "application/json",
-    //     type: string,
-    //     data: {},
-    //     metadata: MetadataType
-    // }
-    //
-    // public abstract fromCompressedData()
 }
 
 export type BaseEventData = {

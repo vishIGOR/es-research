@@ -1,5 +1,4 @@
 import { BACKWARDS, END, EventStoreDBClient, FORWARDS, START } from "@eventstore/db-client";
-import { decompressFromBase64 } from "lz-string";
 import { Event } from "../events/Event";
 import { EventType } from "../events/EventType";
 import { AccountBlockedEvent } from "../events/accounts/AccountBlockedEvent";
@@ -36,27 +35,25 @@ export class EventStore implements ClientsEventStoreInterface, AccountsEventStor
     }
 
     async saveClientEvent(event: ClientEvent): Promise<void> {
-        // if (event.type === EventType.accountOpened || event.type === EventType.clientRegistered) {
-        //     await this.client.appendToStream(event.streamName, event.toJsonEvent());
-        //     return;
-        // }
-        // EventStore.buffer.push(event);
-        // if (EventStore.buffer.length >= this.batchSavePeriod) {
-        //     await this.batchSave();
-        // }
-        await this.client.appendToStream(`client-${event.clientId}`, event.toJsonEvent());
+        if (event.type === EventType.clientRegistered) {
+            await this.client.appendToStream(`client-${event.clientId}`, event.toJsonEvent());
+            return;
+        }
+        EventStore.buffer.push(event);
+        if (EventStore.buffer.length >= this.batchSavePeriod) {
+            await this.batchSave();
+        }
     }
 
     async saveAccountEvent(event: AccountEvent): Promise<void> {
-        // if (event.type === EventType.accountOpened || event.type === EventType.clientRegistered) {
-        //     await this.client.appendToStream(event.streamName, event.toJsonEvent());
-        //     return;
-        // }
-        // EventStore.buffer.push(event);
-        // if (EventStore.buffer.length >= this.batchSavePeriod) {
-        //     await this.batchSave();
-        // }
-        await this.client.appendToStream(`account-${event.accountId}`, event.toJsonEvent());
+        if (event.type === EventType.accountOpened) {
+            await this.client.appendToStream(`account-${event.accountId}`, event.toJsonEvent());
+            return;
+        }
+        EventStore.buffer.push(event);
+        if (EventStore.buffer.length >= this.batchSavePeriod) {
+            await this.batchSave();
+        }
     }
 
     async getClientEvents(clientId: string, options?: EventStoreGetOptions): Promise<ClientEvent[]> {
@@ -226,9 +223,4 @@ export class EventStore implements ClientsEventStoreInterface, AccountsEventStor
         EventStore.buffer = [];
         await this.client.appendToStream("test-batch-stream", events);
     }
-
-    private decompressData(compressedData: string): string {
-        return decompressFromBase64(compressedData);
-    }
-
 }

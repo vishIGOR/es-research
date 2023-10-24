@@ -78,8 +78,6 @@ export class AccountAggregate extends Aggregate {
 
                 break;
         }
-
-        this.version = event.revision;
     }
 
     static async openAccount(params: { clientId: string }): Promise<AccountAggregate> {
